@@ -35,20 +35,20 @@ export default function NewFlipBook({
       //       .split("\n\n")
       const subtitles = subtitleSrc.trim()
         .split(/\n\s*\n/)
-            .map((subtitle) => {
-              const lines = subtitle.split("\n").filter(line => line.trim() !== ""); // Filter out empty lines
-              const index = lines.shift(); // Remove and get the index
-              const time = lines.shift(); // Remove and get the time
-              const text = lines.join("\n"); // Concatenate the remaining lines as text
-              return {
-                index,
-                start: TimeInDecimal(time?.split(" --> ")[0]),
-                end: TimeInDecimal(time?.split(" --> ")[1]),
-                text,
-              };
-            });
-            //console.log(subtitles,"subtitles")
-          setSubtitles(subtitles);
+        .map((subtitle) => {
+          const lines = subtitle.split("\n").filter(line => line.trim() !== ""); // Filter out empty lines
+          const index = lines.shift(); // Remove and get the index
+          const time = lines.shift(); // Remove and get the time
+          const text = lines.join("\n"); // Concatenate the remaining lines as text
+          return {
+            index,
+            start: TimeInDecimal(time?.split(" --> ")[0]),
+            end: TimeInDecimal(time?.split(" --> ")[1]),
+            text,
+          };
+        });
+      //console.log(subtitles,"subtitles")
+      setSubtitles(subtitles);
     }
   }, []);
   useEffect(() => {
@@ -180,62 +180,61 @@ export default function NewFlipBook({
         controls
         autoPlay={false}
       />
-    <div >
-      <FlipPage
-        ref={audioRef}
-        flipOnTouchZone={0.8}
-        uncutPages={true}
-        orientation="horizontal"
-        // responsive={true}
-        className="flip"
-        width={990}
-        style={{
-          padding: "0",
-          margin: "0",
-        }}
-        showTouchHint
-        height={620}
-        animationDuration="1000"
-      >
-     
+      <div >
+        <FlipPage
+          ref={audioRef}
+          flipOnTouchZone={0.8}
+          uncutPages={true}
+          orientation="horizontal"
+          // responsive={true}
+          className="flip"
+          width={990}
+          style={{
+            padding: "0",
+            margin: "0",
+          }}
+          showTouchHint
+          height={620}
+          animationDuration="1000"
+        >
 
-        {pages.map((page, pindex) => (
-          <article
-            key={pindex}
-            className="p-7 relative text-center flex flex-col text-black"
-          >
 
-            {page.content.map((subtitle, index) => {
-            
-              return (
-                <div className=  " md:w-[45%] text-left">
-                  <p
-                    key={index}
-                    className={`p-2 ${
-                      subtitle.text === currentSubtitle?.text
-                        ? "font-bold text-red-800 text-3xl"
+          {pages.map((page, pindex) => (
+            <article
+              key={pindex}
+              className="p-7 relative text-center flex flex-col text-black"
+            >
+
+              {page.content.map((subtitle, index) => {
+
+                return (
+                  <div className=" md:w-[45%] text-left">
+                    <p
+                      key={index}
+                      className={`p-2 ${subtitle.text === currentSubtitle?.text
+                        ? "font-bold bg-amber-200 text-3xl"
                         : "font-normal text-xl"
-                    }`}
-                  >
-                    {subtitle?.text}
-                  </p>
-                </div>
-              );
-            })}
+                        }`}
+                    >
+                      {subtitle?.text}
+                    </p>
+                  </div>
+                );
+              })}
 
-            <div className="absolute right_image bg-white left-[50%] top-0 ">
-              <img
-                className="object-cover h-full object-center pt-4 pb-28 px-10"
-                src="https://images.pexels.com/photos/3662839/pexels-photo-3662839.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-            </div>
-          </article>
-        ))}
+              <div className="absolute right_image bg-white left-[50%] top-0 ">
+                <img
+                  className="object-cover h-full object-center pt-4 pb-28 px-10"
+                  src="https://images.pexels.com/photos/3662839/pexels-photo-3662839.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                  alt=""
+                />
+              </div>
+            </article>
+          ))}
 
-     
 
-      </FlipPage>
+
+        </FlipPage>
       </div>
     </div>
   );
